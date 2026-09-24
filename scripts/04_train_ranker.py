@@ -28,6 +28,7 @@ sys.path.insert(0, str(BASE_DIR))
 
 from config.settings import (  # noqa: E402
     DATA_PROCESSED_DIR,
+    DATA_PROCESSED_SAMPLE_DIR,
     FIGURES_DIR,
     LGBM_PARAMS,
     LGBM_SAMPLE_PARAMS,
@@ -150,8 +151,16 @@ def main() -> None:
     if not tx_path.exists() and args.sample:
         tx_path = DATA_PROCESSED_DIR / "transactions_5w.parquet"
 
-    assert feat_path.exists(), f"Ejecute scripts/03_features.py primero. No existe: {feat_path}"
-    assert tx_path.exists(), f"Ejecute scripts/01_preprocess.py primero. No existe: {tx_path}"
+    if not feat_path.exists():
+        cmd = "python scripts/03_features.py" + (" --sample" if args.sample else "")
+        hint = f"Ejecute '{cmd}' primero."
+        if not args.sample and (DATA_PROCESSED_SAMPLE_DIR / "features_matrix.parquet").exists():
+            hint += "\n  [PISTA] Se encontró features_matrix.parquet en sample/. Si deseaba evaluar la muestra rápida, añada '--sample'."
+        raise FileNotFoundError(f"[ERROR DE DEPENDENCIAS] No existe: {feat_path}.\n  -> {hint}")
+
+    if not tx_path.exists():
+        cmd = "python scripts/01_preprocess.py" + (" --sample" if args.sample else "")
+        raise FileNotFoundError(f"[ERROR DE DEPENDENCIAS] No existe: {tx_path}.\n  -> Ejecute '{cmd}' primero.")
 
     log_memory_usage("Inicio de entrenamiento")
 

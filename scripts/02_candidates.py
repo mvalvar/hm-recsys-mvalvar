@@ -108,8 +108,12 @@ def main() -> None:
     cust_path = processed_dir / "customers.parquet"
     art_path = processed_dir / "articles.parquet"
 
+    cmd_hint = "python scripts/01_preprocess.py" + (" --sample" if args.sample else "")
     for p in [tx_path, cust_path, art_path]:
-        assert p.exists(), f"Debe ejecutar scripts/01_preprocess.py primero. No existe {p}"
+        assert p.exists(), (
+            f"[ERROR DE DEPENDENCIAS] No existe el archivo requerido: {p.name}.\n"
+            f"  -> Ejecute primero: {cmd_hint}"
+        )
 
     print(f"-> Cargando checkpoints Parquet desde {processed_dir}...")
     tx_df = pl.read_parquet(tx_path)

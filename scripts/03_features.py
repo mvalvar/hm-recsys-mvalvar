@@ -20,7 +20,11 @@ import polars as pl
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
-from config.settings import DATA_PROCESSED_DIR, get_processed_dir  # noqa: E402
+from config.settings import (  # noqa: E402
+    DATA_PROCESSED_DIR,
+    DATA_PROCESSED_SAMPLE_DIR,
+    get_processed_dir,
+)
 from src.features.builder import build_full_feature_matrix  # noqa: E402
 from src.utils.memory import log_memory_usage  # noqa: E402
 from src.utils.validation import split_transactions_temporal  # noqa: E402
@@ -91,8 +95,32 @@ def run_features_pipeline(
     if not art_path.exists() and use_sample:
         art_path = DATA_PROCESSED_DIR / "articles.parquet"
 
+    generator_map = {
+        "candidates.parquet": "python scripts/02_candidates.py",
+        "transactions_5w.parquet": "python scripts/01_preprocess.py",
+        "customers.parquet": "python scripts/01_preprocess.py",
+        "articles.parquet": "python scripts/01_preprocess.py",
+    }
+
     for p in [cand_path, tx_path, cust_path, art_path]:
-        assert p.exists(), f"Falta archivo requerido: {p.name}. Ejecute fases previas primero."
+        if not p.exists():
+            suggested_cmd = generator_map.get(p.name, "la fase previa")
+            if use_sample:
+                suggested_cmd += " --sample"
+            hint = f"Ejecute '{suggested_cmd}' para generarlo."
+            if p.name == "candidates.parquet" and not use_sample:
+                sample_cand = DATA_PROCESSED_SAMPLE_DIR / "candidates.parquet"
+                if sample_cand.exists():
+                    hint += (
+                        f"\n  [PISTA] Se detectó '{sample_cand.name}' en la subcarpeta sample/ ({sample_cand})."
+                        "\n  - Si desea continuar con la muestra rápida, añada el flag '--sample':"
+                        "\n      python scripts/03_features.py --sample"
+                        "\n  - Si desea el pipeline completo (Modo 3), ejecute primero:"
+                        "\n      python scripts/02_candidates.py"
+                    )
+            raise FileNotFoundError(
+                f"\n[ERROR DE DEPENDENCIAS] Falta archivo requerido: {p.name}\n  -> {hint}"
+            )
 
     print(f"-> Cargando checkpoints Parquet desde {cand_path.parent}...")
     candidates_df = pl.read_parquet(cand_path)
