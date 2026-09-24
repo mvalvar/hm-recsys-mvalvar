@@ -324,9 +324,19 @@ Ver detalle completo en [`PRODUCTION_EVALUATION.md`](PRODUCTION_EVALUATION.md).
 ### 5.3 Modo 3: Replicación Científica Completa desde Kaggle
 Aprovisiona automáticamente los datos crudos originales desde Kaggle o almacenamiento local autorizado y ejecuta la arquitectura oficial de extremo a extremo.
 
+> **Regla de Dependencia Secuencial Estricta:** Los scripts del pipeline están desacoplados y encadenados de forma secuencial:  
+> `00_download_data.py` (descarga) ➔ `01_preprocess.py` (Parquets base) ➔ `02_candidates.py` (`candidates.parquet`) ➔ `03_features.py` (`features_matrix.parquet`) ➔ `04_train_ranker.py` (modelo) ➔ `07_submission.py` (inferencia final).  
+> *Cada fase requiere indispensablemente los artefactos generados en la fase previa.*
+
 *Autenticación Kaggle compatible con Docker y Local:* Gracias a los montajes automáticos en `docker-compose.yml` (`~/.kaggle:/home/appuser/.kaggle:ro` y `./data:/app/data`), las credenciales de Kaggle obtenidas en la máquina anfitriona (mediante `kaggle auth login` o `kaggle.json`) son compartidas de forma segura con el contenedor, habilitando la ejecución de la descarga y el pipeline completo tanto en entorno local como vía `docker exec`.
 
 #### Vía Docker (Recomendada)
+**Ejecución del pipeline completo en una sola instrucción:**
+```bash
+docker exec hm-recsys-api bash -c "python scripts/01_preprocess.py && python scripts/02_candidates.py && python scripts/03_features.py && python scripts/04_train_ranker.py && python scripts/07_submission.py --version v8"
+```
+
+**O paso a paso:**
 ```bash
 # Paso previo: Levantar los servicios de Docker (construcción y arranque en segundo plano):
 docker compose up --build -d
@@ -357,9 +367,18 @@ docker exec hm-recsys-api python scripts/07_submission.py --version v8
 
 # 8. Certificación de Reproducibilidad Criptográfica
 docker exec hm-recsys-api python scripts/07_submission.py --check-file submission_v8.csv --version v8
+
+# 9. Precomputar artefactos para el servicio web FastAPI (para servir inferencias en tiempo real)
+docker exec hm-recsys-api python scripts/export_v8_artifacts.py
 ```
 
 #### Vía Entorno Local (Python)
+**Ejecución del pipeline completo en una sola instrucción:**
+```bash
+python scripts/01_preprocess.py && python scripts/02_candidates.py && python scripts/03_features.py && python scripts/04_train_ranker.py && python scripts/07_submission.py --version v8
+```
+
+**O paso a paso:**
 ```bash
 # 0. Aprovisionamiento oficial de los 4 CSV necesarios (sin images.zip)
 python scripts/00_download_data.py --source kaggle
@@ -387,6 +406,9 @@ python scripts/07_submission.py --version v8
 
 # 8. Certificación de Reproducibilidad Criptográfica
 python scripts/07_submission.py --check-file submission_v8.csv --version v8
+
+# 9. Precomputar artefactos para el servicio web FastAPI (necesario para servir la API en local sin Release)
+python scripts/export_v8_artifacts.py
 ```
 
 ### 5.4 Evolución Histórica de Arquitecturas y Rendimiento (V1 a V8)
