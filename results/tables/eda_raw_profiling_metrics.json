@@ -1,0 +1,154 @@
+{
+  "articles": {
+    "total": 105542,
+    "unique": 105542,
+    "null_desc_pct": 0.3941558810710428
+  },
+  "customers": {
+    "total": 1371980,
+    "unique": 1371980,
+    "null_age_pct": 1.1560664149623172,
+    "mean_age": 36.386964565794,
+    "median_age": 32.0,
+    "mode_age": 21,
+    "age_cohorts": {
+      "<25": {
+        "count": 357169,
+        "pct": 26.033105438854793
+      },
+      "25-34": {
+        "count": 393292,
+        "pct": 28.666015539585125
+      },
+      "35-44": {
+        "count": 169041,
+        "pct": 12.320952200469394
+      },
+      "45-54": {
+        "count": 253951,
+        "pct": 18.509817927375035
+      },
+      "55+": {
+        "count": 182666,
+        "pct": 13.314042478753334
+      },
+      "SIN_EDAD": {
+        "count": 15861,
+        "pct": 1.1560664149623172
+      }
+    }
+  },
+  "transactions_full": {
+    "total": 31788324,
+    "active_customers": 1362281,
+    "active_articles": 104547,
+    "min_date": "2018-09-20",
+    "max_date": "2020-09-22",
+    "mean_price": 0.02782927385719917,
+    "median_price": 0.025406779661016947,
+    "sparsity_pct": 99.97804696697825,
+    "density_pct": 0.021953033021744152
+  },
+  "transactions_5w": {
+    "total": 1300034,
+    "active_customers": 273166,
+    "inactive_customers": 1098814,
+    "active_articles": 30482,
+    "sparsity_pct": 99.99549076626296,
+    "density_pct": 0.004509233737033033
+  },
+  "channel_w5": {
+    "<25": {
+      "store_pct": 38.3,
+      "online_pct": 61.7,
+      "store_count": 125054,
+      "online_count": 201489,
+      "total": 326543
+    },
+    "25-34": {
+      "store_pct": 27.63,
+      "online_pct": 72.37,
+      "store_count": 130965,
+      "online_count": 342976,
+      "total": 473941
+    },
+    "35-44": {
+      "store_pct": 30.03,
+      "online_pct": 69.97,
+      "store_count": 47662,
+      "online_count": 111073,
+      "total": 158735
+    },
+    "45-54": {
+      "store_pct": 35.32,
+      "online_pct": 64.68,
+      "store_count": 84459,
+      "online_count": 154692,
+      "total": 239151
+    },
+    "55+": {
+      "store_pct": 34.26,
+      "online_pct": 65.74,
+      "store_count": 46795,
+      "online_count": 89782,
+      "total": 136577
+    }
+  },
+  "channel_full": {
+    "<25": {
+      "store_pct": 33.16,
+      "online_pct": 66.84,
+      "store_count": 2163678,
+      "online_count": 4361373,
+      "total": 6525051
+    },
+    "25-34": {
+      "store_pct": 25.15,
+      "online_pct": 74.85,
+      "store_count": 2909152,
+      "online_count": 8655916,
+      "total": 11565068
+    },
+    "35-44": {
+      "store_pct": 27.82,
+      "online_pct": 72.18,
+      "store_count": 1143653,
+      "online_count": 2967656,
+      "total": 4111309
+    },
+    "45-54": {
+      "store_pct": 33.25,
+      "online_pct": 66.75,
+      "store_count": 2021662,
+      "online_count": 4057894,
+      "total": 6079556
+    },
+    "55+": {
+      "store_pct": 33.2,
+      "online_pct": 66.8,
+      "store_count": 1118029,
+      "online_count": 2249053,
+      "total": 3367082
+    },
+    "SIN_EDAD": {
+      "store_pct": 37.28,
+      "online_pct": 62.72,
+      "store_count": 52288,
+      "online_count": 87970,
+      "total": 140258
+    }
+  },
+  "repurchase_lags_full": {
+    "total_repurchases": 7717898,
+    "median_days": 22.0,
+    "mean_days": 48.25601478537291,
+    "pct_7d": 26.325315519847504,
+    "pct_14d": 39.62597069823934,
+    "pct_21d": 49.11365763061393,
+    "pct_35d": 62.62193410692912,
+    "pct_60d": 76.15440110765911,
+    "pct_90d": 84.80814335716798,
+    "pct_180d": 94.62168326142688,
+    "pct_365d": 99.01635134333209
+  }
+}

@@ -1,0 +1,73 @@
+# ==============================================================================
+# .dockerignore — Aislamiento Estricto para el Contenedor Docker (TFM H&M)
+# Evita copiar cachés locales, entornos virtuales, tests y gigabytes de datos crudos
+# ==============================================================================
+
+# Control de versiones y metadatos de Git
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Entornos virtuales y paquetes de Python
+.venv/
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Pruebas unitarias, análisis estático (linting) y control de calidad (QA)
+tests/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Datasets masivos y tablas procesadas (NO INCLUIR DATOS EN LAS IMÁGENES DOCKER)
+h&m_data/
+data/
+data_raw/
+data_sample/
+data_processed/
+*.csv
+*.parquet
+*.feather
+*.zip
+*.tar
+*.gz
+*.zst
+
+# Modelos de Machine Learning y puntos de control (montados como volúmenes de solo lectura en ejecución)
+models/
+*.model
+*.txt
+!requirements*.txt
+
+# Cuadernos de investigación, informes, figuras y documentación
+notebooks/
+memoria/
+results/
+scripts/
+*.ipynb
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+*.md
+!README.md
+
+# Archivos de entorno, IDEs y sistemas operativos
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

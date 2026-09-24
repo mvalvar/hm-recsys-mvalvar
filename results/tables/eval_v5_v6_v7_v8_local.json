@@ -1,0 +1,42 @@
+{
+  "evaluation_cohort": "W104 (2020-09-16 a 2020-09-22)",
+  "customers_evaluated": 68984,
+  "active_customers_with_history": 240925,
+  "v5_metrics": {
+    "map12": 0.02703,
+    "recall12": 0.0564,
+    "hit_rate12": 0.11187,
+    "catalog_coverage": 0.1695
+  },
+  "v6_metrics": {
+    "map12": 0.02659,
+    "recall12": 0.05422,
+    "hit_rate12": 0.10737,
+    "catalog_coverage": 0.14317
+  },
+  "v7_metrics": {
+    "map12": 0.02805,
+    "recall12": 0.0604,
+    "hit_rate12": 0.11561,
+    "catalog_coverage": 0.1759
+  },
+  "v8_metrics": {
+    "map12": 0.02882,
+    "recall12": 0.0626,
+    "hit_rate12": 0.11945,
+    "catalog_coverage": 0.17026
+  },
+  "delta_v8_vs_v7": {
+    "map12_absolute": 0.00077,
+    "map12_percent": 2.73,
+    "recall12_absolute": 0.00221,
+    "hit_rate12_absolute": 0.00384
+  },
+  "delta_v8_vs_v5": {
+    "map12_absolute": 0.00179,
+    "map12_percent": 6.62,
+    "recall12_absolute": 0.0062,
+    "hit_rate12_absolute": 0.00758
+  },
+  "execution_duration_sec": 8.5
+}

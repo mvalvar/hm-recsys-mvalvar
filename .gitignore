@@ -1,0 +1,103 @@
+# ==============================================================================
+# Git Ignore — RecSys Production Pipeline (hm-recsys-mvalvar)
+# ==============================================================================
+
+# Entornos virtuales de Python
+.venv/
+venv/
+ENV/
+env/
+*.venv
+
+# Cachés de Python, bytecode y compilación
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Herramientas de Calidad de Código, Cobertura y Tests
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# Variables de entorno y credenciales locales
+.env
+.env.*
+!.env.example
+
+# Datasets masivos y almacenamiento out-of-core (>100 MB)
+data/*
+!data/.gitkeep
+h&m_data/
+
+# Artefactos procesados intermedios y tablas Parquet
+data_processed/*
+!data_processed/.gitkeep
+
+# Muestra ágil de desarrollo (mantenida en Git)
+!data_sample/.gitkeep
+!data_sample/*.csv
+
+# Archivos pesados, volcados de predicción y paquetes de distribución
+*.parquet
+*.feather
+*.zip
+*.tar
+*.tar.gz
+*.tsv
+production_artifacts.zip
+checksums.sha256
+smoke_test_customers.txt
+releases/
+
+# Modelos entrenados y serializados pesados
+*.pkl
+*.joblib
+*.onnx
+*.lgbm
+models/*
+!models/.gitkeep
+!models/lgbm_ranker.txt
+!models/lgbm_ranker_meta.json
+models/sample/
+
+# Artefactos de evaluación pesados y submissions de Kaggle
+submission*.csv
+submission*.csv.*
+submission*.zip
+submission*.gz
+*.csv.gz
+sample_submission.csv
+results/archive_submissions/*.csv
+results/archive_submissions/*.gz
+!results/archive_submissions/MANIFEST.md
+results/tables/*_sample.*
+results/figures/*_sample.*
+
+# Logs del sistema y archivos temporales de ejecución
+*.log
+logs/
+*.tmp
+*.bak
+temp/
+tmp/
+
+# Archivos de entorno y sistemas operativos
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

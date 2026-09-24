@@ -1,0 +1,184 @@
+{
+  "base_metrics": {
+    "n_customers_total": 278275,
+    "n_articles_total": 105542,
+    "n_transactions_5w": 1334947,
+    "n_active_users_5w": 278275,
+    "n_active_articles_5w": 30750,
+    "sparsity_5w_pct": 99.995455,
+    "inactive_users_5w_pct": 0.0,
+    "median_transactions_per_user_5w": 3.0,
+    "mean_transactions_per_user_5w": 4.7972,
+    "n_weeks_agg": 106
+  },
+  "demographics": {
+    "mean_age": 35.2,
+    "median_age": 30.0,
+    "null_age_count": 0,
+    "null_age_pct": 0.0,
+    "articles_with_desc": 105126,
+    "null_desc_count": 416,
+    "null_desc_pct": 0.39
+  },
+  "sales_channel_by_cohort": {
+    "<25": {
+      "store_count": 145919,
+      "online_count": 248247,
+      "total_transactions": 394166,
+      "store_pct": 37.02,
+      "online_pct": 62.98
+    },
+    "25-34": {
+      "store_count": 115253,
+      "online_count": 311708,
+      "total_transactions": 426961,
+      "store_pct": 26.99,
+      "online_pct": 73.01
+    },
+    "35-44": {
+      "store_count": 49183,
+      "online_count": 107454,
+      "total_transactions": 156637,
+      "store_pct": 31.4,
+      "online_pct": 68.6
+    },
+    "45-54": {
+      "store_count": 84323,
+      "online_count": 155498,
+      "total_transactions": 239821,
+      "store_pct": 35.16,
+      "online_pct": 64.84
+    },
+    "55+": {
+      "store_count": 40257,
+      "online_count": 77105,
+      "total_transactions": 117362,
+      "store_pct": 34.3,
+      "online_pct": 65.7
+    }
+  },
+  "repurchase_5w": {
+    "n_recompra_events": 148125,
+    "median_lag_days": 6.0,
+    "mean_lag_days": 8.2,
+    "cdf_pct": {
+      "day_1": 12.51,
+      "day_3": 33.74,
+      "day_7": 58.97,
+      "day_14": 81.7,
+      "day_21": 93.33,
+      "day_30": 99.27,
+      "day_35": 100.0
+    }
+  },
+  "repurchase_2yr": {
+    "n_recompra_events": 7717898,
+    "median_lag_days": 22.0,
+    "mean_lag_days": 48.26,
+    "cdf_pct": {
+      "day_1": 5.52,
+      "day_3": 14.11,
+      "day_7": 26.33,
+      "day_14": 39.63,
+      "day_21": 49.11,
+      "day_30": 58.47,
+      "day_35": 62.62,
+      "day_45": 69.06,
+      "day_60": 76.15,
+      "day_90": 84.81,
+      "day_180": 94.62,
+      "day_365": 99.02
+    }
+  },
+  "concentration": {
+    "power_law_alpha": 0.772,
+    "gini_total_catalog": 0.9409,
+    "gini_active_catalog": 0.7973
+  },
+  "model_features": {
+    "n_features": 39,
+    "total_gain": 3430381.420493304,
+    "top_features": [
+      [
+        "uxa_days_since_last_purchase",
+        {
+          "gain": 2454267.5716072666,
+          "split": 95,
+          "gain_pct": 71.545
+        }
+      ],
+      [
+        "is_R1",
+        {
+          "gain": 949588.4517859331,
+          "split": 39,
+          "gain_pct": 27.6817
+        }
+      ],
+      [
+        "best_rank",
+        {
+          "gain": 12801.684147523447,
+          "split": 634,
+          "gain_pct": 0.3732
+        }
+      ],
+      [
+        "uxa_repurchase_count",
+        {
+          "gain": 10898.409252153555,
+          "split": 111,
+          "gain_pct": 0.3177
+        }
+      ],
+      [
+        "a_is_recent_introduction",
+        {
+          "gain": 1404.4036564175383,
+          "split": 279,
+          "gain_pct": 0.0409
+        }
+      ],
+      [
+        "is_R5",
+        {
+          "gain": 658.4548013895948,
+          "split": 181,
+          "gain_pct": 0.0192
+        }
+      ],
+      [
+        "u_online_ratio",
+        {
+          "gain": 379.297145947801,
+          "split": 359,
+          "gain_pct": 0.0111
+        }
+      ],
+      [
+        "u_unique_articles",
+        {
+          "gain": 176.22592002668003,
+          "split": 517,
+          "gain_pct": 0.0051
+        }
+      ],
+      [
+        "u_total_transactions",
+        {
+          "gain": 103.08849512781393,
+          "split": 274,
+          "gain_pct": 0.003
+        }
+      ],
+      [
+        "is_R6",
+        {
+          "gain": 24.40253730382156,
+          "split": 21,
+          "gain_pct": 0.0007
+        }
+      ]
+    ]
+  }
+}

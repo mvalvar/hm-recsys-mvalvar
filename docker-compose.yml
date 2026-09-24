@@ -1,0 +1,58 @@
+# ==============================================================================
+# Docker Compose (Root) — Orquestación Endurecida del Servicio de Inferencia
+# ==============================================================================
+
+services:
+  hm-recsys-api:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: hm-recsys-api:1.0.0
+    container_name: hm-recsys-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - API_WORKERS=2
+      - API_MAX_INDEXED_ROWS=${API_MAX_INDEXED_ROWS:-100000}
+      - API_KEY_AUTH_ENABLED=${API_KEY_AUTH_ENABLED:-false}
+      - API_KEY_SECRET=${API_KEY_SECRET:-}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+      - KAGGLE_USERNAME=${KAGGLE_USERNAME:-}
+      - KAGGLE_KEY=${KAGGLE_KEY:-}
+      - KAGGLE_API_TOKEN=${KAGGLE_API_TOKEN:-}
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ~/.kaggle:/home/appuser/.kaggle:ro
+      # Montajes para persistencia de artefactos generados por el pipeline y la API
+      - ./models:/app/models
+      - ./data_processed:/app/data_processed
+      - ./data_sample:/app/data_sample:ro
+      - ./data:/app/data
+      - ./app:/app/app
+      - ./src:/app/src
+      - ./config:/app/config
+      - ./scripts:/app/scripts
+      - ./tests:/app/tests
+      - ./results:/app/results
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=200m
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 4.0G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/live"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+      start_period: 10s

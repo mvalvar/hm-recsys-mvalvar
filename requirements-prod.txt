@@ -1,0 +1,19 @@
+# ==============================================================================
+# Dependencias Estrictas de Producción — API REST de Inferencia
+# Optimizado para microcontenedor Docker (< 500 MB)
+# ==============================================================================
+
+# Framework ASGI y Servidor Web
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
+
+# Motor de Ranking e Inferencia 
+lightgbm>=4.0.0
+
+# Procesamiento Columnar en Memoria
+polars>=1.0.0
+numpy>=1.26.0
+
+# Telemetría de Sistema y Memoria RSS
+psutil>=5.9.0

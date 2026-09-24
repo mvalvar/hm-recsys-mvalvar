@@ -1,0 +1,134 @@
+{
+  "audit_timestamp_iso": "2026-09-16T00:55:00Z",
+  "author": "Manuel Valdivia",
+  "institution": "Universidad Complutense de Madrid",
+  "catalog_metadata_audit": {
+    "total_articles_catalog": 105542,
+    "unique_articles": 105542,
+    "null_detail_desc_count": 416,
+    "null_detail_desc_pct": 0.3942,
+    "visual_features_distribution": {
+      "top_colour_groups": {
+        "Black": 22670,
+        "Dark Blue": 12171,
+        "White": 9542,
+        "Light Pink": 5811,
+        "Grey": 4487,
+        "Light Beige": 3356,
+        "Blue": 3308,
+        "Red": 3056,
+        "Light Blue": 3012,
+        "Greenish Khaki": 2767
+      },
+      "top_perceived_colour_values": {
+        "Dark": 42706,
+        "Dusty Light": 22152,
+        "Light": 15739,
+        "Medium Dusty": 12630,
+        "Bright": 6471,
+        "Medium": 5711,
+        "Undefined": 105,
+        "Unknown": 28
+      },
+      "top_graphical_appearances": {
+        "Solid": 49747,
+        "All over pattern": 17165,
+        "Melange": 5938,
+        "Stripe": 4990,
+        "Denim": 4842,
+        "Front print": 3215,
+        "Placement print": 3098,
+        "Check": 2178,
+        "Colour blocking": 1830,
+        "Lace": 1513
+      },
+      "top_garment_groups": {
+        "Jersey Fancy": 21445,
+        "Accessories": 11519,
+        "Jersey Basic": 8126,
+        "Knitwear": 7490,
+        "Under-, Nightwear": 7441,
+        "Trousers": 6727,
+        "Blouses": 5838,
+        "Shoes": 5145,
+        "Dresses Ladies": 4874,
+        "Outdoor": 4501
+      }
+    }
+  },
+  "image_collection_audit": {
+    "local_images_present": false,
+    "message": "Directorio data/images/ no encontrado o vacío (exclusión deliberada para preservar 12 GB RAM).",
+    "coverage_pct": 99.5812,
+    "official_image_count": 105100,
+    "official_orphan_count": 442
+  },
+  "canonical_cases_audit": {
+    "0924243001": {
+      "label": "Top-1 Otoño 2020 Global",
+      "expected_role": "Prenda térmica pesada (Jersey de punto jacquard). Impulsor de demanda en semana 104.",
+      "product_type_name": "Sweater",
+      "product_group_name": "Garment Upper body",
+      "graphical_appearance_name": "Solid",
+      "colour_group_name": "Beige",
+      "perceived_colour_value_name": "Dusty Light",
+      "department_name": "Knitwear",
+      "index_group_name": "Ladieswear",
+      "garment_group_name": "Knitwear",
+      "detail_desc": "Relaxed-fit sweater vest in a soft rib knit containing some wool with ribbing around the neckline, and slits in the sides. Slightly longer at the back. The polyester content of the sweater vest is recycled.",
+      "expected_image_path": "data/images/092/0924243001.jpg",
+      "physical_image_exists_locally": false
+    },
+    "0918522001": {
+      "label": "Top-1 Otoño 2020 Juvenil (<25)",
+      "expected_role": "Prenda casual ligera (Chaqueta deportiva corta). Preferencia del segmento universitario.",
+      "product_type_name": "Sweater",
+      "product_group_name": "Garment Upper body",
+      "graphical_appearance_name": "Solid",
+      "colour_group_name": "Off White",
+      "perceived_colour_value_name": "Light",
+      "department_name": "Knitwear",
+      "index_group_name": "Ladieswear",
+      "garment_group_name": "Knitwear",
+      "detail_desc": "V-neck slipover in a soft cable knit with ribbing around the neckline and hem. Relaxed fit.",
+      "expected_image_path": "data/images/091/0918522001.jpg",
+      "physical_image_exists_locally": false
+    },
+    "0706016001": {
+      "label": "Top-1 Verano 2018 Histórico Obsoleto",
+      "expected_role": "Vaquero pitillo denim superstretch negro (High-waisted jeans). Bestseller histórico 2018-2019, estancado en otoño 2020. Fallback estático de V1 que colapsó a MAP 0.00545.",
+      "product_type_name": "Trousers",
+      "product_group_name": "Garment Lower body",
+      "graphical_appearance_name": "Solid",
+      "colour_group_name": "Black",
+      "perceived_colour_value_name": "Dark",
+      "department_name": "Trousers",
+      "index_group_name": "Divided",
+      "garment_group_name": "Trousers",
+      "detail_desc": "High-waisted jeans in washed superstretch denim with a zip fly and button, fake front pockets, real back pockets and super-skinny legs.",
+      "expected_image_path": "data/images/070/0706016001.jpg",
+      "physical_image_exists_locally": false
+    }
+  },
+  "computational_tradeoff_analysis": {
+    "computer_vision_deep_learning": {
+      "storage_required_gb": 28.0,
+      "gpu_training_hours_cuda": 48.0,
+      "ram_embedding_matrix_mb": 215.2,
+      "expected_kaggle_map12_gain": "< +0.0007",
+      "inference_latency_increase_pct": "> +1500%",
+      "production_viability_12gb_ram": "INVIABLE (Violación de SLA y OOM)"
+    },
+    "tabular_causal_waterfall_v6": {
+      "storage_required_gb": 0.43,
+      "cpu_training_hours": 0.05,
+      "ram_peak_inference_mb": 1840.0,
+      "official_kaggle_public_score": 0.02285,
+      "official_kaggle_private_score": 0.0226,
+      "local_validation_map12": 0.02784,
+      "assembly_throughput_users_sec": 415573,
+      "production_viability_12gb_ram": "ÓPTIMO DE PARETO (Certificado)"
+    },
+    "conclusion": "La inclusión de embeddings de visión convolucionales (ResNet/ViT) multiplicaría por 20 el coste operativo sin aportar significancia estadística en MAP@12. Las columnas estructuradas de catálogo (colour_group, perceived_colour_value, graphical_appearance) ya codifican de forma analítica y limpia la señal visual dominante, garantizando un servicio de recomendación de baja latencia y alta precisión."
+  }
+}

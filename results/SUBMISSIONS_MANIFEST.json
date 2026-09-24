@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0.0",
+  "project": "TFM Motor de Recomendacion Escalable para Retail de Moda (H&M RecSys Challenge)",
+  "institution": "Universidad Complutense de Madrid",
+  "author": "Manuel Valdivia",
+  "generated_at": "2026-09-07T17:21:00Z",
+  "canonical_production_version": "v8",
+  "submissions": [
+    {
+      "version": "v1",
+      "canonical_name": "submission_v1.csv",
+      "original_name": "submission.csv",
+      "archived_path": "results/archive_submissions/submission_v1.csv",
+      "gzip_path": "results/archive_submissions/submission_v1.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 56693753,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "10C30F578F4BBA82EE307F419EF07B49",
+      "sha256": "097BB4187F1D5980C56D9088AB6DF39324DB8BD541C691154CE998B6A9A85AD0",
+      "gzip_sha256": "7D1F4476756F4B4618F1704068C452D8D3DF271581101D9916093348AAA84FAB",
+      "kaggle_scores": {
+        "public": 0.00545,
+        "private": 0.00567
+      },
+      "architecture": "Muestra reducida (2.000 clientes activos) + Fallback estatico historico (2018)",
+      "diagnostic": "Desfase estacional critico y cobertura muestral del 0.14% de la poblacion"
+    },
+    {
+      "version": "v2",
+      "canonical_name": "submission_v2.csv",
+      "original_name": "submission_v2.csv",
+      "archived_path": "results/archive_submissions/submission_v2.csv",
+      "gzip_path": "results/archive_submissions/submission_v2.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 61768752,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "3BFEB8EE90C8657F792AD247306F6D0A",
+      "sha256": "6128F79D1C773AA93BB2580AE90D0AFBCDBF8A723E91027F80F871C63F93625F",
+      "gzip_sha256": "1EBABB75A801D69FADB12CC23450D3933D6C9B3ACD5CA8C1EF566ADF5E8A818B",
+      "kaggle_scores": {
+        "public": 0.01726,
+        "private": 0.01735
+      },
+      "architecture": "Escalado out-of-core a catalogo completo (278k clientes activos) + Fallback dinamico 7d por cohortes de edad",
+      "diagnostic": "Benchmark solido inicial (>3x vs V1), resolviendo desfase estacional en clientes inactivos"
+    },
+    {
+      "version": "v3",
+      "canonical_name": "submission_v3.csv",
+      "original_name": "submission_v3.csv",
+      "archived_path": "results/archive_submissions/submission_v3.csv",
+      "gzip_path": "results/archive_submissions/submission_v3.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 59881110,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "738B558E20972D74C59FE8968F75EB64",
+      "sha256": "19D08257657612D71AF60C7E95F9365BEDA0BCE6855D38171BCB68D9EBC4C691",
+      "gzip_sha256": "7002F21B0358928487E0A342780E913852C8D423030BD130ADBE5A6B51F40894",
+      "kaggle_scores": {
+        "public": 0.01597,
+        "private": 0.01619
+      },
+      "architecture": "Desacople temporal estricto con ventana deslizante forzada",
+      "diagnostic": "Subentrenamiento severo (modelo de 2 arboles) por contraccion del 96.9% del conjunto de entrenamiento"
+    },
+    {
+      "version": "v4",
+      "canonical_name": "submission_v4.csv",
+      "original_name": "submission_v4.csv",
+      "archived_path": "results/archive_submissions/submission_v4.csv",
+      "gzip_path": "results/archive_submissions/submission_v4.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 62479099,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "C74D1FE6A9D74456C9779D2275D64896",
+      "sha256": "9C26C0B1E54F2AB48F2496D8D0042321250F4965FA351F40CF04334DD7F16703",
+      "gzip_sha256": "FB0A15A17ACF068DCA2FB3CAD3100221BA3D42C9C04B2923079F2EBDAAAE2BFF",
+      "kaggle_scores": {
+        "public": 0.0169,
+        "private": 0.01728
+      },
+      "architecture": "Re-ranking supervisado multi-candidato con 8 heuristicas (R8 departamento), 39 features y 50 arboles LightGBM",
+      "diagnostic": "Fenomeno de desplazamiento por hiper-generacion (el 84.8% de clientes activos no recibieron ninguno de los 5 superventas de otono)"
+    },
+    {
+      "version": "v5",
+      "canonical_name": "submission_v5.csv",
+      "original_name": "submission_v5.csv",
+      "current_path": "submission_v5.csv",
+      "gzip_path": "submission_v5.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 56662210,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "1EE36703A0B723DBEDA52F9CFF917584",
+      "sha256": "6516C735AA30038520BCBED85756250D55AE4D388FDF1D21633573175740C2E2",
+      "gzip_sha256": "7CE096991256B21D75276192CFCFDFD566C07BA8B32E0A586C8C160F7F0F57C9",
+      "kaggle_scores": {
+        "public": 0.02238,
+        "private": 0.02212
+      },
+      "architecture": "Waterfall estratificado (recencia personal 35 dias + inyeccion forzosa garantizada de superventas de otono por cohortes de edad)",
+      "diagnostic": "Entregable oficial can\u00f3nico: erradicacion del desplazamiento de superventas (+27.5% vs V2) y maximo rendimiento oficial"
+    },
+    {
+      "version": "v6",
+      "canonical_name": "submission_v6.csv",
+      "original_name": "submission_v6.csv",
+      "current_path": "submission_v6.csv",
+      "gzip_path": "submission_v6.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 62687462,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "17407A3C1DD2E1A8674E8719D62D044A",
+      "sha256": "D06CEE34741ED69BDF6EA8975CE4775217100E42DEA5D737411028A7DBBB5E9D",
+      "gzip_sha256": "D3EB5745BE623FB19AD1F209E4B5B157D31F7EFE3B0095D6F48963DB682CA0B7",
+      "kaggle_scores": {
+        "public": 0.02134,
+        "private": 0.02197
+      },
+      "architecture": "Waterfall H\u00edbrido Causal: Recompras Recientes 35d (Slots 1-3) + Co-ocurrencia en Cesta P(B|A) (Slots 4-7) + Bestsellers Oto\u00f1o por Cohorte de Edad (Slots 8-12)",
+      "diagnostic": "Regresi\u00f3n en Leaderboard (0.02197 vs 0.02212 de V5): el truncamiento forzado de compras personales en kp <= 3 canibaliz\u00f3 compras habituales aut\u00e9nticas en el 41.37% de clientes frecuentes (113k usuarios) reemplaz\u00e1ndolas por complementos probabil\u00edsticos",
+      "local_validation_map12": 0.02659
+    },
+    {
+      "version": "v7",
+      "canonical_name": "submission_v7.csv",
+      "original_name": "submission_v7.csv",
+      "current_path": "submission_v7.csv",
+      "gzip_path": "submission_v7.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 65604405,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "4AC7EB802DC7C8EF6F09DAA978C0B4C2",
+      "sha256": "F0DA19502561331D2962876A577FC054EFC962763D7D537958CDF9948D160DC8",
+      "gzip_sha256": "AD32F0A067514FFE2D4A585704E680B55C9BE239DF029E507588437692CFC862",
+      "kaggle_scores": {
+        "public": 0.02291,
+        "private": 0.02332
+      },
+      "architecture": "Waterfall H\u00edbrido Causal No Destructivo: Recompras Personales 35d no destructivas (hasta 12) + Co-ocurrencia Adaptativa P(B|A) (hasta 6 en huecos libres) + Bestsellers Oto\u00f1o por Cohorte de Edad",
+      "diagnostic": "Nueva arquitectura SOTA: salto cualitativo a 0.02332 (+5.42% vs V5) y 0.02291 en Public, confirmando la validez del principio de no canibalizaci\u00f3n de recompras personales (kp <= 12) y el rescate causal adaptativo en slots libres (kc <= 6).",
+      "local_validation_map12": 0.02805,
+      "delta_vs_v5_percent": 3.78
+    },
+    {
+      "version": "v8",
+      "canonical_name": "submission_v8.csv",
+      "original_name": "submission_v8.csv",
+      "current_path": "submission_v8.csv",
+      "gzip_path": "submission_v8.csv.gz",
+      "filesize_bytes": 270280083,
+      "gzip_bytes": 60060309,
+      "total_rows": 1371981,
+      "customers_evaluated": 1371980,
+      "md5": "E842B6E8092DF684665C2DA5EF9B4214",
+      "sha256": "E34B230E3C0744C335F6E809175C115C63BB73BB5B10A9A7A2A5DBA7C53DF106",
+      "gzip_sha256": "C766D66BF7649D713AA55D0C03C35B9D95B04D34665DBF931768633E902E635C",
+      "kaggle_scores": {
+        "public": 0.02347,
+        "private": 0.02386
+      },
+      "architecture": "Waterfall Multidimensional con Afinidad Global Ponderada y Suavizado Multi-Semana",
+      "diagnostic": "Nuevo SOTA definitivo del proyecto: superación oficial de V7 (+2.32% en Private / +2.44% en Public) y V5 (+7.87% en Private), con 100% de reproducibilidad bit a bit.",
+      "local_validation_map12": 0.02882,
+      "delta_vs_v7_percent": 2.32,
+      "delta_vs_v5_percent": 7.87
+    }
+  ]
+}
