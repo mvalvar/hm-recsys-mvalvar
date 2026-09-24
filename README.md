@@ -2,7 +2,7 @@
 
 **Autor:** Manuel Valdivia  
 **Institución:** Universidad Complutense de Madrid (UCM)
-**Programa:** Universidad Máster en Data Science, Big Data & Business Analytics
+**Programa:** Máster en Data Science, Big Data & Business Analytics
 
 ---
 
