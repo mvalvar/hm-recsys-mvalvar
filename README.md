@@ -498,7 +498,7 @@ Documentación interactiva OpenAPI/Swagger UI disponible en: `http://localhost:8
 
 | Método | Endpoint / Ruta | Para qué sirve (Propósito) | Parámetros | Ejemplo con cURL |
 | :--- | :--- | :--- | :--- | :--- |
-| **`POST`** | `/recommend/{customer_id}` | **Recomendación Top-K:** Inferencia supervisada LightGBM o degradación cold-start a superventas. | `customer_id` (Path), `limit` (Query, def: 12), `offset` (Query, def: 0) | `curl.exe -s -X POST http://localhost:8000/recommend/0043d...` |
+| **`POST`** | `/recommend/{customer_id}` | **Recomendación Top-K:** Inferencia supervisada LightGBM o degradación cold-start a superventas. | `customer_id` (Path), `limit` (Query, def: 12), `offset` (Query, def: 0) | `curl.exe -s -X POST http://localhost:8000/recommend/0043d69dcca282763b8db18f967a2d301e69d5966bebd74291c49a0812663223` |
 | **`GET`** | `/health` | **Telemetría y Salud:** Clientes en catálogo, clientes en RAM y consumo de memoria RSS. | Ninguno | `curl.exe -s http://localhost:8000/health` |
 | **`GET`** | `/health/live` | **Sonda Liveness:** Usada por Docker/K8s para comprobar que el proceso ASGI responde. | Ninguno | `curl.exe -s http://localhost:8000/health/live` |
 | **`GET`** | `/health/ready` | **Sonda Readiness:** Verifica que modelo y catálogo están listos para recibir tráfico. | Ninguno | `curl.exe -s http://localhost:8000/health/ready` |
