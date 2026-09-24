@@ -77,14 +77,14 @@ curl -X GET http://localhost:8000/health
 }
 ```
 
-### Inferencia de Cliente Activo (`GET /recommend/{customer_id}`)
+### Inferencia de Cliente Activo (`POST /recommend/{customer_id}`)
 ```bash
-curl -X GET http://localhost:8000/recommend/000058a12d5b43e67d225668fa1f8d618c13dc232df0cad8ffebc807fb6ab0f0
+curl -X POST http://localhost:8000/recommend/000058a12d5b43e67d225668fa1f8d618c13dc232df0cad8ffebc807fb6ab0f0
 ```
 Retorna 12 recomendaciones personalizadas con latencia $p95 < 12$ ms (`is_cold_start = false`).
 
-### Inferencia de Cliente Inactivo / Cold-Start
+### Inferencia de Cliente Inactivo / Cold-Start (`POST /recommend/{customer_id}`)
 ```bash
-curl -X GET http://localhost:8000/recommend/cliente_no_existente_hex_64_caracteres_0000000000000000000000000000
+curl -X POST http://localhost:8000/recommend/0000000000000000000000000000000000000000000000000000000000000000
 ```
 Retorna 12 recomendaciones de popularidad estacional con latencia $< 1$ ms (`is_cold_start = true`).
