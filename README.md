@@ -333,7 +333,7 @@ Aprovisiona automáticamente los datos crudos originales desde Kaggle o almacena
 #### Vía Docker (Recomendada)
 **Ejecución del pipeline completo en una sola instrucción:**
 ```bash
-docker exec hm-recsys-api bash -c "python scripts/01_preprocess.py && python scripts/02_candidates.py && python scripts/03_features.py && python scripts/04_train_ranker.py && python scripts/07_submission.py --version v8"
+docker exec hm-recsys-api bash -c "python scripts/01_preprocess.py && python scripts/02_candidates.py && python scripts/03_features.py && python scripts/04_train_ranker.py && python scripts/07_submission.py --version v8 && python scripts/export_v8_artifacts.py"
 ```
 
 **O paso a paso:**
@@ -550,7 +550,12 @@ La API incorpora una arquitectura adaptativa de carga en memoria ([app/model_loa
 * **Para alternar a Modo 1 (Muestra Ágil / Sin Datos Crudos):**
   Si deseas levantar la API exclusivamente sobre la muestra ligera versionada (`data_sample/`):
   ```bash
-  TFM_DATA_RAW_DIR=data_sample uvicorn app.main:app --host 0.0.0.0 --port 8000
+  # En Windows PowerShell:
+  $env:USE_SAMPLE_DATA="true"
+  python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+
+  # En Linux / macOS / Bash:
+  USE_SAMPLE_DATA=true python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
   ```
 
 #### Verificación del Modo de Ejecución Activo

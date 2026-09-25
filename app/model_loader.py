@@ -33,6 +33,9 @@ from config.settings import (
     DATA_SAMPLE_DIR,
     MODELS_DIR,
     MODELS_SAMPLE_DIR,
+    USE_SAMPLE_DATA,
+    get_models_dir,
+    get_processed_dir,
 )
 from src.candidates import get_popular_fallback_items
 
@@ -77,14 +80,28 @@ class RecommenderServiceLoader:
             start_t = time.perf_counter()
             logger.info("-> [RecommenderServiceLoader] Inicializando artefactos de inferencia...")
 
+            env_sample_val = os.getenv("USE_SAMPLE_DATA", "").strip().lower()
+            api_sample_val = os.getenv("API_USE_SAMPLE", "").strip().lower()
+            raw_dir_val = os.getenv("TFM_DATA_RAW_DIR", "").strip().lower()
+            force_sample = (
+                USE_SAMPLE_DATA
+                or env_sample_val in ("true", "1", "yes", "t", "y")
+                or api_sample_val in ("true", "1", "yes", "t", "y")
+                or "data_sample" in raw_dir_val
+            )
+            base_processed_dir = get_processed_dir(use_sample=force_sample)
+            base_models_dir = get_models_dir(use_sample=force_sample)
+            alt_processed_dir = DATA_PROCESSED_DIR if force_sample else DATA_PROCESSED_SAMPLE_DIR
+            alt_models_dir = MODELS_DIR if force_sample else MODELS_SAMPLE_DIR
+
+            if force_sample:
+                logger.info("  * [MODO MUESTRA ACTIVO] Priorizando artefactos ligeros en sample/...")
+
             # Fallback de popularidad estacional (Top-12 de última semana con decaimiento temporal)
             try:
-                tx_path = DATA_PROCESSED_DIR / "transactions_5w.parquet"
-                if (
-                    not tx_path.exists()
-                    and (DATA_PROCESSED_SAMPLE_DIR / "transactions_5w.parquet").exists()
-                ):
-                    tx_path = DATA_PROCESSED_SAMPLE_DIR / "transactions_5w.parquet"
+                tx_path = base_processed_dir / "transactions_5w.parquet"
+                if not tx_path.exists() and (alt_processed_dir / "transactions_5w.parquet").exists():
+                    tx_path = alt_processed_dir / "transactions_5w.parquet"
                 if tx_path.exists():
                     tx_df = pl.read_parquet(tx_path)
                     self.popular_fallback = get_popular_fallback_items(
@@ -120,11 +137,11 @@ class RecommenderServiceLoader:
                 self._set_default_fallback()
 
             # Cargar modelo serializado LightGBM
-            model_path = MODELS_DIR / "lgbm_ranker.txt"
-            if not model_path.exists() and (MODELS_SAMPLE_DIR / "lgbm_ranker.txt").exists():
-                model_path = MODELS_SAMPLE_DIR / "lgbm_ranker.txt"
+            model_path = base_models_dir / "lgbm_ranker.txt"
+            if not model_path.exists() and (alt_models_dir / "lgbm_ranker.txt").exists():
+                model_path = alt_models_dir / "lgbm_ranker.txt"
                 logger.info(
-                    f"  * [FALLBACK SAMPLE] Modelo de producción no encontrado en models/; cargando {model_path}"
+                    f"  * [FALLBACK] Modelo de inferencia cargado desde {model_path}"
                 )
             if model_path.exists():
                 self.model = lgb.Booster(model_file=str(model_path))
@@ -137,12 +154,12 @@ class RecommenderServiceLoader:
                 )
 
             # Cargar mapeo bidireccional customer_id <-> customer_idx (con fallback a data_sample)
-            mapping_path = DATA_PROCESSED_DIR / "customer_id_mapping.parquet"
+            mapping_path = base_processed_dir / "customer_id_mapping.parquet"
             if (
                 not mapping_path.exists()
-                and (DATA_PROCESSED_SAMPLE_DIR / "customer_id_mapping.parquet").exists()
+                and (alt_processed_dir / "customer_id_mapping.parquet").exists()
             ):
-                mapping_path = DATA_PROCESSED_SAMPLE_DIR / "customer_id_mapping.parquet"
+                mapping_path = alt_processed_dir / "customer_id_mapping.parquet"
             if mapping_path.exists():
                 mapping_df = pl.read_parquet(mapping_path)
                 self.customer_mapping = dict(
@@ -173,14 +190,14 @@ class RecommenderServiceLoader:
                 )
 
             # Pre-indexar candidatos y características en memoria para inferencia O(1)
-            feat_path = DATA_PROCESSED_DIR / "features_matrix.parquet"
+            feat_path = base_processed_dir / "features_matrix.parquet"
             if (
                 not feat_path.exists()
-                and (DATA_PROCESSED_SAMPLE_DIR / "features_matrix.parquet").exists()
+                and (alt_processed_dir / "features_matrix.parquet").exists()
             ):
-                feat_path = DATA_PROCESSED_SAMPLE_DIR / "features_matrix.parquet"
+                feat_path = alt_processed_dir / "features_matrix.parquet"
                 logger.info(
-                    f"  * [FALLBACK SAMPLE] Matriz de producción no encontrada en data_processed/; indexando {feat_path}"
+                    f"  * [FALLBACK] Matriz de candidatos cargada desde {feat_path}"
                 )
             if feat_path.exists():
                 # Límite configurable de filas pre-indexadas para gobernar el presupuesto de RAM
@@ -239,9 +256,9 @@ class RecommenderServiceLoader:
 
             # Cargar artefactos de inferencia nativos de V8 (Cascada de precisión)
             # 5.1 Superventas segmentados por rango de edad
-            bs_path = DATA_PROCESSED_DIR / "v8_bestsellers_age.parquet"
-            if not bs_path.exists() and (DATA_PROCESSED_SAMPLE_DIR / "v8_bestsellers_age.parquet").exists():
-                bs_path = DATA_PROCESSED_SAMPLE_DIR / "v8_bestsellers_age.parquet"
+            bs_path = base_processed_dir / "v8_bestsellers_age.parquet"
+            if not bs_path.exists() and (alt_processed_dir / "v8_bestsellers_age.parquet").exists():
+                bs_path = alt_processed_dir / "v8_bestsellers_age.parquet"
             if bs_path.exists():
                 bs_df = pl.read_parquet(bs_path)
                 bs_agg = (
@@ -261,9 +278,9 @@ class RecommenderServiceLoader:
                 )
 
             # 5.2 Reglas de afinidad de cesta (cross-selling empírico de co-ocurrencia)
-            ba_path = DATA_PROCESSED_DIR / "v8_basket_affinity.parquet"
-            if not ba_path.exists() and (DATA_PROCESSED_SAMPLE_DIR / "v8_basket_affinity.parquet").exists():
-                ba_path = DATA_PROCESSED_SAMPLE_DIR / "v8_basket_affinity.parquet"
+            ba_path = base_processed_dir / "v8_basket_affinity.parquet"
+            if not ba_path.exists() and (alt_processed_dir / "v8_basket_affinity.parquet").exists():
+                ba_path = alt_processed_dir / "v8_basket_affinity.parquet"
             if ba_path.exists():
                 ba_df = pl.read_parquet(ba_path)
                 ba_agg = (
@@ -283,9 +300,9 @@ class RecommenderServiceLoader:
                 )
 
             # 5.3 Historial de compras recientes a 28 días
-            ch_path = DATA_PROCESSED_DIR / "v8_customer_history_28d.parquet"
-            if not ch_path.exists() and (DATA_PROCESSED_SAMPLE_DIR / "v8_customer_history_28d.parquet").exists():
-                ch_path = DATA_PROCESSED_SAMPLE_DIR / "v8_customer_history_28d.parquet"
+            ch_path = base_processed_dir / "v8_customer_history_28d.parquet"
+            if not ch_path.exists() and (alt_processed_dir / "v8_customer_history_28d.parquet").exists():
+                ch_path = alt_processed_dir / "v8_customer_history_28d.parquet"
             if ch_path.exists():
                 ch_df = pl.read_parquet(ch_path)
                 ch_agg = (
@@ -305,9 +322,9 @@ class RecommenderServiceLoader:
                 )
 
             # 5.4 Segmentos de edad de clientes para personalización demográfica
-            cust_path = DATA_PROCESSED_DIR / "customers.parquet"
-            if not cust_path.exists() and (DATA_PROCESSED_SAMPLE_DIR / "customers.parquet").exists():
-                cust_path = DATA_PROCESSED_SAMPLE_DIR / "customers.parquet"
+            cust_path = base_processed_dir / "customers.parquet"
+            if not cust_path.exists() and (alt_processed_dir / "customers.parquet").exists():
+                cust_path = alt_processed_dir / "customers.parquet"
             if cust_path.exists():
                 cust_df = pl.read_parquet(cust_path, columns=["customer_idx", "age_bin"])
                 self.customer_age_bins = dict(

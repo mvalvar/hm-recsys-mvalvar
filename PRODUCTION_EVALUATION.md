@@ -69,17 +69,20 @@ curl -X GET http://localhost:8000/health
 **Respuesta esperada:**
 ```json
 {
-  "status": "healthy",
+  "status": "ok",
+  "service": "hm_recommender",
   "model_loaded": true,
-  "indexed_customers": 278144,
-  "catalog_customers": 1371980,
-  "execution_mode": "production"
+  "version": "1.0.0",
+  "indexed_customers": 1678,
+  "catalog_customers": 278275,
+  "memory_rss_mb": 486.6
 }
 ```
+*(Nota: En Modo 2 con `API_MAX_INDEXED_ROWS=100000`, `indexed_customers` es 1.678 sobre un catálogo activo de 278.275 clientes, garantizando una huella de memoria < 500 MB).*
 
 ### Inferencia de Cliente Activo (`POST /recommend/{customer_id}`)
 ```bash
-curl -X POST http://localhost:8000/recommend/000058a12d5b43e67d225668fa1f8d618c13dc232df0cad8ffebc807fb6ab0f0
+curl -X POST http://localhost:8000/recommend/00000dbacae5abe5e23885899a1fa44253a17956c6d1c3d25f88aa139fdfc657
 ```
 Retorna 12 recomendaciones personalizadas con latencia $p95 < 12$ ms (`is_cold_start = false`).
 
